@@ -38,10 +38,10 @@ then
   exit 2
 fi
 
-last_zipped_time="$(zless $last_zipped_log | tail -50 | tac | grep -m1 -oP '(?<=^\[)\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')"
+last_zipped_time="$(zcat $last_zipped_log | tail -50 | tac | grep -m1 -oP '(?<=^\[)\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')"
 first_time="$(head -10 $current_log | grep -m1 -oP '(?<=^\[)\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')"
 last_time="$(tail -50 $current_log | tac | grep -m1 -oP '(?<=^\[)\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')"
-echo "Last zipped, first, last times: $last_zipped_time, $first_time, $last_time"
+echo "Last zipped, current first & last times: $last_zipped_time, $first_time & $last_time"
 
 last_zipped_timestamp="$(date2stamp "$last_zipped_time")"
 first_timestamp="$(date2stamp "$first_time")"
@@ -51,8 +51,8 @@ current_timestamp="$(date2stamp "$(date '+%Y-%m-%d %T')")"
 zipped_diff=$((first_timestamp-last_zipped_timestamp))
 current_diff=$((current_timestamp-last_timestamp))
 
-echo "zipped: $first_timestamp - $last_zipped_timestamp = $zipped_diff"
-echo "current: $current_timestamp - $last_timestamp = $current_diff"
+echo "zipped: $first_timestamp - $last_zipped_timestamp = $zipped_diff s"
+echo "current: $current_timestamp - $last_timestamp = $current_diff s"
 
 if [ $current_diff -gt 300 ]
 then
