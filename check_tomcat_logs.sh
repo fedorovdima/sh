@@ -6,6 +6,19 @@ date2stamp() {
 
 prod="$1"
 mdc="$2"
+
+if [[ $1 == *.ru ]]
+then
+  prod="prod2"
+elif [[ $1 == *prod3* ]]
+then
+  prod="prod3"
+else
+  prod="prod1"
+fi
+
+[[ $1 =~ ^(mdc[0-9]*) ]] && mdc="${BASH_REMATCH[1]}" || exit 10
+
 base_path="/opt/logtom/logs/catalina_$prod$mdc"
 echo "Base path: $base_path"
 
