@@ -21,3 +21,12 @@ for file in $(git --no-pager diff --name-only origin/HEAD $(git branch --show-cu
 done
 IFS="$OIFS"
 ```
+
+## Clean up branches from old merged PRs on GitHub
+```
+# Show branches from old merged PRs (colored output)
+git branch --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))' --no-merged
+
+# Burn them all!
+git branch --no-merged | xargs git branch -D
+```
