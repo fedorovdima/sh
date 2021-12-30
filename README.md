@@ -34,5 +34,7 @@ git branch --no-merged | xargs git branch -D
 ## Working with GCP Secret Manager
 ```
 # Put secret(s) to GCP SM
+# $ cat /tmp/pwds.csv
+# secret_name,secret_value
 IFS=,; while read key value; do printf "%s" "$value" | tr -d '\r' | gcloud secrets --project=${PROJECT_NAME} versions add "$key" --data-file=-; done < /tmp/pwds.csv
 ```
