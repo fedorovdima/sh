@@ -30,3 +30,9 @@ git branch --sort=committerdate --format='%(HEAD) %(color:yellow)%(refname:short
 # Burn them all!
 git branch --no-merged | xargs git branch -D
 ```
+
+## Working with GCP Secret Manager
+```
+# Put secret(s) to GCP SM
+IFS=,; while read key value; do printf "%s" "$value" | tr -d '\r' | gcloud secrets --project=${PROJECT_NAME} versions add "$key" --data-file=-; done < /tmp/pwds.csv
+```
